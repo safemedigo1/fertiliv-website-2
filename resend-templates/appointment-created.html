@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Appointment Scheduled – Fertiliv</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f4f1ff; font-family: Arial, Helvetica, sans-serif; padding: 32px 16px; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(124,58,237,0.10); }
+    .header { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); padding: 32px; text-align: center; }
+    .header-logo { font-size: 28px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
+    .header-logo span { color: #c4b5fd; }
+    .header-tagline { color: #ddd6fe; font-size: 13px; margin-top: 4px; }
+    .status-badge { display: inline-block; background: #6366f1; color: #fff; font-size: 13px; font-weight: 700; padding: 5px 16px; border-radius: 20px; margin-top: 16px; letter-spacing: 0.5px; }
+    .body { padding: 36px 36px 28px; }
+    .greeting { font-size: 17px; color: #1a1a2e; margin-bottom: 12px; }
+    .greeting strong { color: #7c3aed; }
+    .intro { color: #4b5563; font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
+    .info-card { background: #f5f3ff; border-radius: 10px; border: 1px solid #e9e3ff; overflow: hidden; margin-bottom: 24px; }
+    .info-card-header { background: #7c3aed; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 18px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 18px; border-bottom: 1px solid #e9e3ff; font-size: 14px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #6b7280; font-weight: 500; }
+    .info-value { color: #1a1a2e; font-weight: 700; text-align: right; max-width: 60%; }
+    .notice { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #1e40af; line-height: 1.6; margin-bottom: 24px; }
+    .notice strong { color: #1d4ed8; }
+    .closing { font-size: 14px; color: #4b5563; line-height: 1.7; }
+    .closing strong { color: #1a1a2e; }
+    .footer { background: #f8f7ff; border-top: 1px solid #e9e3ff; padding: 20px 36px; text-align: center; }
+    .footer p { color: #9ca3af; font-size: 12px; line-height: 1.8; }
+    .footer a { color: #7c3aed; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-logo">🌿 Fertil<span>iv</span></div>
+      <div class="header-tagline">Your Fertility Journey, Our Care</div>
+      <div class="status-badge">📅 Appointment Scheduled</div>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+      <p class="greeting">Dear <strong>{{patientName}}</strong>,</p>
+      <p class="intro">
+        Your appointment has been successfully scheduled at Fertiliv. Here are your appointment details:
+      </p>
+
+      <!-- Appointment Details -->
+      <div class="info-card">
+        <div class="info-card-header">Appointment Details</div>
+        <div class="info-row">
+          <span class="info-label">Date</span>
+          <span class="info-value">{{appointmentDate}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Time</span>
+          <span class="info-value">{{appointmentTime}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Doctor</span>
+          <span class="info-value">{{doctorName}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Appointment Type</span>
+          <span class="info-value">{{appointmentType}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Location</span>
+          <span class="info-value">{{clinicAddress}}</span>
+        </div>
+      </div>
+
+      <!-- Notice -->
+      <div class="notice">
+        <strong>Reminder:</strong> Please arrive <strong>10 minutes</strong> before your scheduled time. To reschedule or cancel, contact us at least <strong>24 hours in advance</strong> at <a href="mailto:info@fertiliv.com" style="color:#1d4ed8;">info@fertiliv.com</a>.
+      </div>
+
+      <p class="closing">
+        We look forward to welcoming you.<br /><br />
+        Warm regards,<br />
+        <strong>The Fertiliv Team</strong>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Fertiliv Fertility Clinic &bull; <a href="mailto:info@fertiliv.com">info@fertiliv.com</a>
+      </p>
+      <p>
+        This email was sent because an appointment was created for you at Fertiliv.<br />
+        If you did not request this, please contact us immediately.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

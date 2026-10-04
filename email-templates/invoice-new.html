@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice – Fertiliv</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f0fb; font-family: Arial, Helvetica, sans-serif; color: #1E0566; }
+    .wrapper { max-width: 620px; margin: 32px auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(30,5,102,0.10); }
+
+    /* ── Header ── */
+    .header { background: #1E0566; padding: 32px 40px 24px; text-align: center; }
+    .header img { height: 52px; }
+    .header-divider { height: 4px; background: linear-gradient(90deg, #E3B2B0 0%, #E5BA99 100%); }
+
+    /* ── Hero band ── */
+    .hero { background: linear-gradient(135deg, #E3B2B0 0%, #E5BA99 100%); padding: 22px 40px; display: flex; align-items: center; gap: 16px; }
+    .hero-icon { width: 48px; height: 48px; background: #1E0566; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .hero-icon svg { fill: #ffffff; }
+    .hero-text h2 { font-size: 20px; font-weight: 700; color: #1E0566; margin-bottom: 2px; }
+    .hero-text p  { font-size: 13px; color: #4a3080; }
+
+    /* ── Body ── */
+    .body { padding: 32px 40px; }
+    .greeting { font-size: 15px; color: #1E0566; margin-bottom: 20px; line-height: 1.6; }
+    .greeting strong { color: #1E0566; }
+
+    /* ── Info card ── */
+    .card { background: #faf7ff; border: 1px solid #e8e0f8; border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
+    .card-header { background: #1E0566; padding: 10px 20px; }
+    .card-header span { color: #E3B2B0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .card-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 20px; border-bottom: 1px solid #ede8f8; font-size: 14px; }
+    .card-row:last-child { border-bottom: none; }
+    .card-label { color: #6b5fa0; font-weight: 500; }
+    .card-value { color: #1E0566; font-weight: 600; }
+    .card-total { background: linear-gradient(90deg, #E3B2B0 0%, #E5BA99 100%); }
+    .card-total .card-label,
+    .card-total .card-value { color: #1E0566; font-size: 15px; font-weight: 700; }
+
+    /* ── CTA button ── */
+    .cta-wrap { text-align: center; margin: 28px 0 20px; }
+    .cta { display: inline-block; background: #1E0566; color: #ffffff !important; text-decoration: none; padding: 13px 36px; border-radius: 8px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
+
+    /* ── Note ── */
+    .note { background: #fff8f5; border-left: 4px solid #E5BA99; border-radius: 4px; padding: 12px 16px; font-size: 13px; color: #5a4030; margin-bottom: 24px; line-height: 1.6; }
+
+    /* ── Footer ── */
+    .footer-divider { height: 3px; background: linear-gradient(90deg, #E3B2B0 0%, #E5BA99 100%); }
+    .footer { background: #1E0566; padding: 22px 40px; text-align: center; }
+    .footer p { color: #c4b8e8; font-size: 12px; line-height: 1.8; }
+    .footer a { color: #E3B2B0; text-decoration: none; }
+    .footer .social { margin-top: 10px; }
+    .footer .social a { color: #E5BA99; margin: 0 6px; font-size: 12px; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <img src="https://fertilivpm-i9gvvk5r.manus.space/manus-storage/logo-horizontal_473c1b94.png" alt="Fertiliv" />
+  </div>
+  <div class="header-divider"></div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+    </div>
+    <div class="hero-text">
+      <h2>New Invoice Issued</h2>
+      <p>Invoice {{invoiceNumber}} · Fertiliv IVF Center</p>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+    <p class="greeting">Dear <strong>{{patientName}}</strong>,<br/><br/>
+    Thank you for choosing Fertiliv. Please find your invoice details below. If you have any questions, our team is always here to help.</p>
+
+    <!-- Invoice details card -->
+    <div class="card">
+      <div class="card-header"><span>Invoice Details</span></div>
+      <div class="card-row">
+        <span class="card-label">Invoice Number</span>
+        <span class="card-value">{{invoiceNumber}}</span>
+      </div>
+      <div class="card-row">
+        <span class="card-label">Issue Date</span>
+        <span class="card-value">{{issueDate}}</span>
+      </div>
+      {{#if dueDate}}
+      <div class="card-row">
+        <span class="card-label">Due Date</span>
+        <span class="card-value">{{dueDate}}</span>
+      </div>
+      {{/if}}
+      <div class="card-row">
+        <span class="card-label">Services</span>
+        <span class="card-value">{{itemsSummary}}</span>
+      </div>
+      <div class="card-row card-total">
+        <span class="card-label">Total Amount</span>
+        <span class="card-value">{{currency}} {{totalAmount}}</span>
+      </div>
+    </div>
+
+    {{#if notes}}
+    <div class="note"><strong>Note:</strong> {{notes}}</div>
+    {{/if}}
+
+    <p style="font-size:14px;color:#4a3080;line-height:1.7;margin-bottom:24px;">
+      For any queries regarding this invoice, please contact us at
+      <a href="mailto:info@fertiliv.com" style="color:#1E0566;font-weight:600;">info@fertiliv.com</a>
+      or call <strong>+90 501 114 70 60</strong>.
+    </p>
+
+    <p style="font-size:14px;color:#1E0566;line-height:1.7;">
+      Warm regards,<br/>
+      <strong>The Fertiliv Team</strong>
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-divider"></div>
+  <div class="footer">
+    <p>
+      <strong style="color:#ffffff;">Fertiliv IVF Center</strong><br/>
+      Halaskargazi, Vali Konağı Cd. No:73, 34371 Şişli/İstanbul, Turkey<br/>
+      <a href="tel:+905011147060">+90 501 114 70 60</a> &nbsp;·&nbsp;
+      <a href="mailto:info@fertiliv.com">info@fertiliv.com</a> &nbsp;·&nbsp;
+      <a href="https://fertiliv.com">fertiliv.com</a>
+    </p>
+    <div class="social">
+      <a href="https://instagram.com/fertiliv">@fertiliv</a>
+    </div>
+    <p style="margin-top:12px;font-size:11px;color:#8070b0;">
+      This email was sent because you have an account or active treatment at Fertiliv.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

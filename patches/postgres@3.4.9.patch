@@ -1,0 +1,57 @@
+diff --git a/cjs/src/connection.js b/cjs/src/connection.js
+index 07f6716702ac888215c86ad6e0071aaf55ae519c..7e137e538553854ae79366820e4f6fe81ac3bbf9 100644
+--- a/cjs/src/connection.js
++++ b/cjs/src/connection.js
+@@ -170,11 +170,14 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
+         : (query = q, query.active = true)
+ 
+       build(q)
++      // Reserve the transaction connection before the pipeline gate.
++      // max_pipeline: 0 (required for Supavisor transaction mode) would
++      // otherwise skip onexecute and break sql.begin. See porsager/postgres#970.
+       return write(toBuffer(q))
+         && !q.describeFirst
+         && !q.cursorFn
+-        && sent.length < max_pipeline
+         && (!q.options.onexecute || q.options.onexecute(connection))
++        && sent.length < max_pipeline
+     } catch (error) {
+       sent.length === 0 && write(Sync)
+       errored(error)
+diff --git a/src/connection.js b/src/connection.js
+index 1b1cccde43b4570d5d071d6ffaab2669b3c2065a..1389d8f7c0b49b338db49fe840560ad20627a9c8 100644
+--- a/src/connection.js
++++ b/src/connection.js
+@@ -170,11 +170,14 @@ function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose
+         : (query = q, query.active = true)
+ 
+       build(q)
++      // Reserve the transaction connection before the pipeline gate.
++      // max_pipeline: 0 (required for Supavisor transaction mode) would
++      // otherwise skip onexecute and break sql.begin. See porsager/postgres#970.
+       return write(toBuffer(q))
+         && !q.describeFirst
+         && !q.cursorFn
+-        && sent.length < max_pipeline
+         && (!q.options.onexecute || q.options.onexecute(connection))
++        && sent.length < max_pipeline
+     } catch (error) {
+       sent.length === 0 && write(Sync)
+       errored(error)
+diff --git a/types/index.d.ts b/types/index.d.ts
+index 13c3432f761e2c2ee5b7dc1bdafe93e49f993dc7..a525d37568452769f22a6fb9f812d1a8630b2131 100644
+--- a/types/index.d.ts
++++ b/types/index.d.ts
+@@ -50,6 +50,12 @@ interface BaseOptions<T extends Record<string, postgres.PostgresType>> {
+    * @default 10
+    */
+   max: number;
++  /**
++   * Max queries written to one connection before it is treated as busy.
++   * Use 0 with a transaction pooler so queries are not pipelined.
++   * @default 100
++   */
++  max_pipeline: number;
+   /**
+    * Idle connection timeout in seconds
+    * @default process.env['PGIDLE_TIMEOUT']

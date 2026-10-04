@@ -1,0 +1,90 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1776695612940,
+      "tag": "0000_purple_blizzard",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1776695839569,
+      "tag": "0001_purple_roulette",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1776718353988,
+      "tag": "0002_broad_maginty",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1776804344253,
+      "tag": "0003_last_crystal",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1776806394597,
+      "tag": "0004_broad_skaar",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1776858538164,
+      "tag": "0005_absurd_tiger_shark",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1776858828014,
+      "tag": "0006_wild_marrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1776874764706,
+      "tag": "0007_simple_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1776886422122,
+      "tag": "0008_fuzzy_blade",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1776949208113,
+      "tag": "0009_flawless_earthquake",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1788124899402,
+      "tag": "0010_finance_service_tax_overrides",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1790433046773,
+      "tag": "0011_whatsapp_outbound_observability",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,899 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /* ─── BORDER RADIUS SYSTEM ─────────────────────────────────────
+     small:  6px  → inputs, badges
+     medium: 10px → buttons
+     large:  16px → cards
+     xl:     20px → main containers
+  ──────────────────────────────────────────────────────────────── */
+  --radius: 0.625rem; /* ~10px — default (buttons) */
+
+  /* ─── NEUTRALS ────────────────────────────────────────────────
+     Background: #F9FAFB  Card: #FFFFFF  Border: #E5E7EB
+     Text Primary: #111827  Text Secondary: #6B7280
+  ──────────────────────────────────────────────────────────────── */
+  --background: oklch(0.984 0.003 247);   /* #F9FAFB */
+  --foreground: oklch(0.145 0.01 264);    /* #111827 */
+  --card: oklch(1.0 0 0);                 /* #FFFFFF */
+  --card-foreground: oklch(0.145 0.01 264);
+  --popover: oklch(1.0 0 0);
+  --popover-foreground: oklch(0.145 0.01 264);
+
+  /* ─── BRAND PRIMARY: #1E0566 ──────────────────────────────── */
+  --primary: oklch(0.22 0.17 277);        /* #1E0566 deep purple */
+  --primary-foreground: oklch(0.98 0.004 240);
+
+  /* ─── SECONDARY: soft grey ───────────────────────────────── */
+  --secondary: oklch(0.961 0.006 247);    /* #F3F4F6 */
+  --secondary-foreground: oklch(0.145 0.01 264); /* #111827 */
+
+  /* ─── MUTED ───────────────────────────────────────────────── */
+  --muted: oklch(0.961 0.006 247);        /* #F3F4F6 */
+  --muted-foreground: oklch(0.52 0.012 264); /* #6B7280 */
+
+  /* ─── ACCENT: light purple tint ──────────────────────────── */
+  --accent: oklch(0.94 0.02 277);
+  --accent-foreground: oklch(0.22 0.17 277);
+
+  /* ─── DESTRUCTIVE: #EF4444 ────────────────────────────────── */
+  --destructive: oklch(0.577 0.245 27);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* ─── BORDER / INPUT ─────────────────────────────────────── */
+  --border: oklch(0.918 0.007 247);       /* #E5E7EB */
+  --input: oklch(0.918 0.007 247);
+  --ring: oklch(0.22 0.17 277);
+
+  /* ─── CHARTS ─────────────────────────────────────────────── */
+  --chart-1: oklch(0.22 0.17 277);       /* brand purple */
+  --chart-2: oklch(0.72 0.12 15);        /* peach */
+  --chart-3: oklch(0.78 0.10 60);        /* warm amber */
+  --chart-4: oklch(0.58 0.14 155);       /* green */
+  --chart-5: oklch(0.58 0.16 240);       /* blue */
+
+  /* ─── SIDEBAR: #1E0566 background ───────────────────────── */
+  --sidebar: oklch(0.22 0.17 277);        /* #1E0566 */
+  --sidebar-foreground: oklch(0.92 0.01 240);
+  --sidebar-primary: oklch(0.78 0.08 15); /* light pink active */
+  --sidebar-primary-foreground: oklch(0.18 0.08 280);
+  --sidebar-accent: oklch(0.27 0.10 277); /* hover: slightly lighter purple */
+  --sidebar-accent-foreground: oklch(0.92 0.01 240);
+  --sidebar-border: oklch(0.28 0.10 277);
+  --sidebar-ring: oklch(0.78 0.08 15);
+
+  /* ─── BRAND CUSTOM PROPERTIES (for inline styles) ─────────── */
+  --brand-purple: #1E0566;
+  --brand-pink: #E3B2B0;
+  --brand-peach: #E5BA99;
+  --shadow-soft: 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-medium: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-primary: 0 4px 12px rgba(30,5,102,0.25);
+}
+
+.dark {
+  --background: oklch(0.12 0.02 240);
+  --foreground: oklch(0.92 0.005 240);
+  --card: oklch(0.16 0.02 240);
+  --card-foreground: oklch(0.92 0.005 240);
+  --popover: oklch(0.16 0.02 240);
+  --popover-foreground: oklch(0.92 0.005 240);
+  --primary: oklch(0.48 0.13 264);
+  --primary-foreground: oklch(0.98 0.004 240);
+  --secondary: oklch(0.22 0.02 240);
+  --secondary-foreground: oklch(0.92 0.005 240);
+  --muted: oklch(0.22 0.02 240);
+  --muted-foreground: oklch(0.60 0.01 240);
+  --accent: oklch(0.22 0.04 264);
+  --accent-foreground: oklch(0.82 0.06 264);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.25 0.02 240);
+  --input: oklch(0.25 0.02 240);
+  --ring: oklch(0.48 0.13 264);
+  --chart-1: oklch(0.48 0.13 264);
+  --chart-2: oklch(0.72 0.18 12);
+  --chart-3: oklch(0.78 0.16 75);
+  --chart-4: oklch(0.65 0.14 155);
+  --chart-5: oklch(0.65 0.16 280);
+  --sidebar: oklch(0.11 0.08 280);
+  --sidebar-foreground: oklch(0.88 0.01 240);
+  --sidebar-primary: oklch(0.78 0.08 15);
+  --sidebar-primary-foreground: oklch(0.18 0.08 280);
+  --sidebar-accent: oklch(0.17 0.06 280);
+  --sidebar-accent-foreground: oklch(0.90 0.01 240);
+  --sidebar-border: oklch(0.20 0.06 280);
+  --sidebar-ring: oklch(0.78 0.08 15);
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    min-width: 0;
+    @apply border-border outline-ring/50;
+  }
+  html, body, #root {
+    min-height: 100%;
+  }
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    overscroll-behavior: none;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+    min-height: 100%;
+    position: relative;
+  }
+  h1, h2, h3 { @apply font-semibold tracking-tight; }
+
+  /* ─── DESKTOP FIELD BORDER BEHAVIOR (Zoho-inspired) ──────────────────────
+     Idle: transparent border, subtle background
+     Hover: light gray border appears
+     Focus: brand purple border + soft ring
+  ──────────────────────────────────────────────────────────────────────── */
+  @media (min-width: 768px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+    select,
+    textarea {
+      background-color: #FCFCFE;
+      border-color: transparent;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):hover:not(:focus),
+    select:hover:not(:focus),
+    textarea:hover:not(:focus) {
+      border-color: #D9DCE3;
+    }
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
+    select:focus,
+    textarea:focus {
+      border-color: #1E0566;
+      box-shadow: 0 0 0 3px rgba(30, 5, 102, 0.08);
+      outline: none;
+    }
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  /* ─── DATE / MONTH INPUT — mobile-safe, no overflow ───────────────────────
+     All date inputs must:
+     • Never exceed their parent container width (min-width:0, max-width:100%)
+     • Use box-sizing:border-box so padding doesn’t add to width
+     • Have overflow:hidden so iOS Safari’s native chrome stays contained
+     • Respect the height set by the parent (h-8 default, h-11 in card views)
+  ──────────────────────────────────────────────────────────────────────────── */
+  input[type="date"],
+  input[type="month"] {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    display: block;
+    line-height: normal;
+  }
+  /* Safari / iOS: constrain the inner edit region */
+  input[type="date"]::-webkit-datetime-edit,
+  input[type="month"]::-webkit-datetime-edit {
+    padding: 0;
+    line-height: 1;
+    overflow: hidden;
+  }
+  input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+  input[type="month"]::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+    overflow: hidden;
+  }
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="month"]::-webkit-inner-spin-button {
+    display: none;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="month"]::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+    height: 1rem;
+    width: 1rem;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  /* ─── iOS SAFARI AUTO-ZOOM FIX ────────────────────────────────────────────
+     iOS Safari automatically zooms the page when a focused form control has a
+     computed font-size below 16px. Our shared Input/Textarea/SelectTrigger
+     components use text-[15px] (15px), which is below the threshold.
+
+     This rule overrides to 16px on mobile only (< 768px) so the page stays
+     at its normal scale when the user taps any input.
+
+     - Desktop (≥ 768px): unchanged at 15px (visual appearance preserved)
+     - Pinch-to-zoom: fully preserved — we do NOT use user-scalable=no
+     - No component files changed — single global rule here
+  ──────────────────────────────────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Availability only: override Safari's intrinsic date-control width without hiding its picker UI. */
+  .availability-native-date {
+    display: block;
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+    min-inline-size: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* ─── SAFE AREA UTILITIES (iOS Safari bottom bar) ─────── */
+  .pb-safe {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+  }
+  .mb-safe {
+    margin-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+  }
+
+  /* ─── STATUS BADGES (pill, pastel bg + strong text) ──────── */
+  .status-upcoming    { @apply bg-blue-50 text-blue-700 border border-blue-100; }
+  .status-confirmed   { @apply bg-emerald-50 text-emerald-700 border border-emerald-100; }
+  .status-completed   { @apply bg-green-50 text-green-700 border border-green-100; }
+  .status-cancelled   { @apply bg-red-50 text-red-700 border border-red-100; }
+  .status-no_show     { @apply bg-orange-50 text-orange-700 border border-orange-100; }
+  .status-rescheduled { @apply bg-purple-50 text-purple-700 border border-purple-100; }
+
+  /* ─── FINANCE STATUS ─────────────────────────────────────── */
+  .finance-paid       { background: #DCFCE7; color: #166534; }
+  .finance-overdue    { background: #FEE2E2; color: #991B1B; }
+  .finance-issued     { background: #DBEAFE; color: #1E40AF; }
+  .finance-draft      { background: #F3F4F6; color: #374151; }
+  .finance-partial    { background: #FEF3C7; color: #92400E; }
+  .finance-cancelled  { background: #F3F4F6; color: #6B7280; }
+
+  /* ─── INTEREST LEVEL ─────────────────────────────────────── */
+  .interest-hot  { background: #FFE4E6; color: #9F1239; }
+  .interest-warm { background: #FEF3C7; color: #92400E; }
+  .interest-cold { background: #DBEAFE; color: #1E40AF; }
+
+  /* ─── LAB FLAGS ──────────────────────────────────────────── */
+  .flag-normal   { background: #DCFCE7; color: #166534; }
+  .flag-high     { background: #FEE2E2; color: #991B1B; }
+  .flag-low      { background: #DBEAFE; color: #1E40AF; }
+  .flag-critical { background: #FECACA; color: #7F1D1D; font-weight: 600; }
+
+  /* ─── SCROLLBAR ──────────────────────────────────────────── */
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; height: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+
+  /* ─── SHADOW UTILITIES ───────────────────────────────────── */
+  .shadow-soft   { box-shadow: var(--shadow-soft); }
+  .shadow-medium { box-shadow: var(--shadow-medium); }
+  .shadow-hover  { box-shadow: var(--shadow-hover); }
+  .shadow-primary-glow { box-shadow: var(--shadow-primary); }
+}
+
+@layer components {
+  /* ─── CONTAINER ──────────────────────────────────────────── */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding-left: 2rem; padding-right: 2rem; max-width: 1280px; }
+  }
+
+  .flex { min-height: 0; min-width: 0; }
+
+  /* ─── CLINICAL CARD ──────────────────────────────────────── */
+  /* Use: <div className="clinical-card"> */
+  .clinical-card {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    padding: 20px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .clinical-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ─── METRIC / KPI CARD ──────────────────────────────────── */
+  .metric-card {
+    background: linear-gradient(135deg, #FFFFFF, #FFF7F5);
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    padding: 20px;
+    display: flex;
+    gap: 12px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .metric-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .metric-card-icon {
+    background: #FDECEC;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ─── STATUS PILL (badge) ────────────────────────────────── */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ─── TABLE CONTAINER ────────────────────────────────────── */
+  .table-container {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* ─── TABLE ROW HOVER ────────────────────────────────────── */
+  .table-row-hover {
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .table-row-hover:hover {
+    background: #FAFAFA;
+  }
+
+  /* ─── PRIMARY BUTTON OVERRIDE ────────────────────────────── */
+  /* Applies to shadcn Button variant="default" */
+  .btn-primary-clinical {
+    background: #1E0566;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .btn-primary-clinical:hover {
+    background: #2A0A85;
+    box-shadow: var(--shadow-primary);
+  }
+
+  /* ─── MICRO-INTERACTION: TAB UNDERLINE ───────────────────── */
+  .tab-underline {
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .tab-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #1E0566;
+    border-radius: 1px;
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+  }
+  .tab-underline[data-state="active"]::after {
+    transform: scaleX(1);
+  }
+
+  /* ─── CALENDAR ───────────────────────────────────────────── */
+  .calendar-container {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+  }
+  .calendar-day-cell {
+    padding: 12px;
+    border: 1px solid #F3F4F6;
+    transition: background 0.15s ease;
+  }
+  .calendar-today {
+    background: #FFF1F0;
+    border: 2px solid #E3B2B0 !important;
+    border-radius: 12px;
+  }
+  .appt-pill {
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .appt-pill-consultation { background: #EDE9FE; color: #5B21B6; }
+  .appt-pill-procedure    { background: #FEF3C7; color: #92400E; }
+  .appt-pill-confirmed    { background: #DCFCE7; color: #166534; }
+
+  /* ─── EMPTY STATE ────────────────────────────────────────── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+    gap: 12px;
+  }
+  .empty-state-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(30,5,102,0.06), rgba(227,178,176,0.15));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+}
+
+/* ─── RADIOLOGY CARD — iOS Safari / iPhone Chrome overflow fix ───────────────
+   iOS Safari WebKit ignores width constraints on input[type="date"] unless
+   -webkit-appearance:none is set AND every ancestor has min-width:0 +
+   box-sizing:border-box. Wrappers use overflow:visible to keep border visible.
+   These rules target the radiology entry card and all its children.
+──────────────────────────────────────────────────────────────────────────── */
+.radiology-card,
+.radiology-entry-card,
+.radiology-card .form-field,
+.radiology-card .date-field,
+.radiology-card .date-input-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.radiology-card input[type="date"],
+.radiology-card input.date-input,
+.radiology-card .date-input-wrapper input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid #dcdfe5;
+  background: #ffffff;
+  color: #111827;
+  border-radius: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* iOS Safari / iPhone Chrome — force containment inside the card */
+@supports (-webkit-touch-callout: none) {
+  .radiology-card input[type="date"],
+  .radiology-card input.date-input,
+  .radiology-card .date-input-wrapper input {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+}
+
+/* Prevent iOS from forcing internal field overflow via flex */
+.radiology-card input {
+  flex-shrink: 1;
+}
+
+/* If a date picker library wraps the input (react-datepicker etc.) */
+.radiology-card .react-datepicker-wrapper,
+.radiology-card .react-datepicker__input-container,
+.radiology-card .date-picker-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* ─── MEDICAL INTAKE FORM — iOS Safari responsive grid fix ──────────────────
+   Miscarriage row: 4 columns (Date | Gestational Age | Notes textarea | Delete)
+   Period row / two-col row: 2 equal columns
+   All field wrappers: no fixed widths, no overflow
+──────────────────────────────────────────────────────────────────────────── */
+.miscarriage-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 0.9fr auto;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+.period-row,
+.two-col-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.field-wrapper,
+.form-field,
+.input-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.delete-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Notes textarea — compact medical-note style */
+.notes-textarea,
+textarea.notes-field {
+  min-height: 78px;
+  height: auto;
+  resize: vertical;
+  padding: 8px 10px;
+  line-height: 1.35;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* iOS Safari / iPhone Chrome — force containment for intake form grids */
+@supports (-webkit-touch-callout: none) {
+  .miscarriage-row,
+  .period-row,
+  .two-col-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+  .miscarriage-row > *,
+  .period-row > *,
+  .two-col-row > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+  .notes-textarea,
+  textarea.notes-field {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    -webkit-appearance: none !important;
+  }
+}
+
+/* ─── PREVIOUS TESTS / LAB RESULTS CARD — iOS Safari date row fix ───────────
+   Collection Date and Report Date must each take exactly 50% of the card width.
+   -webkit-appearance:none forces iOS WebKit to respect width constraints.
+──────────────────────────────────────────────────────────────────────────── */
+.previous-tests-card .date-fields-row,
+.lab-results-card .date-fields-row,
+.test-card .date-fields-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.previous-tests-card .date-field,
+.lab-results-card .date-field,
+.test-card .date-field,
+.previous-tests-card .date-input-wrapper,
+.lab-results-card .date-input-wrapper,
+.test-card .date-input-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.previous-tests-card .date-input,
+.lab-results-card .date-input,
+.test-card .date-input,
+.previous-tests-card input[type="date"],
+.lab-results-card input[type="date"],
+.test-card input[type="date"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border: 1px solid #dcdfe5;
+  background: #ffffff;
+  color: #111827;
+  border-radius: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* iPhone Safari/Chrome — force strict 50/50 split, keep border visible */
+@supports (-webkit-touch-callout: none) {
+  .previous-tests-card .date-fields-row,
+  .lab-results-card .date-fields-row,
+  .test-card .date-fields-row {
+    grid-template-columns: minmax(0, calc(50% - 4px)) minmax(0, calc(50% - 4px));
+    overflow: visible !important;
+  }
+
+  .previous-tests-card .date-field,
+  .lab-results-card .date-field,
+  .test-card .date-field,
+  .previous-tests-card .date-input-wrapper,
+  .lab-results-card .date-input-wrapper,
+  .test-card .date-input-wrapper {
+    overflow: visible !important;
+  }
+
+  .previous-tests-card .date-input,
+  .lab-results-card .date-input,
+  .test-card .date-input,
+  .previous-tests-card input[type="date"],
+  .lab-results-card input[type="date"],
+  .test-card input[type="date"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    border: 1px solid #dcdfe5 !important;
+    background: #ffffff !important;
+    border-radius: 10px !important;
+    -webkit-appearance: none !important;
+  }
+}
+
+/* ─── PREVIOUS FERTILITY TREATMENTS CARD — iOS Safari Treatment Date fix ────
+   Treatment Date (Month/Year) input[type="month"] must stay inside the card.
+   overflow:visible on wrappers keeps the border visible.
+   -webkit-appearance:none forces iOS WebKit to respect width constraints.
+──────────────────────────────────────────────────────────────────────────── */
+.fertility-treatment-card,
+.previous-fertility-treatment-card,
+.treatment-entry-card {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.fertility-treatment-card .date-field,
+.fertility-treatment-card .month-year-field,
+.fertility-treatment-card .date-input-wrapper,
+.fertility-treatment-card .react-datepicker-wrapper,
+.fertility-treatment-card .react-datepicker__input-container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  display: block;
+  overflow: visible;
+}
+
+.fertility-treatment-card .month-year-input,
+.fertility-treatment-card .date-input,
+.fertility-treatment-card input[type="month"],
+.fertility-treatment-card input[type="date"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 12px;
+  box-sizing: border-box;
+  border: 1px solid #dcdfe5;
+  background: #ffffff;
+  color: #111827;
+  border-radius: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* iPhone Chrome/Safari — force strict containment */
+@supports (-webkit-touch-callout: none) {
+  .fertility-treatment-card .date-field,
+  .fertility-treatment-card .month-year-field,
+  .fertility-treatment-card .date-input-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .fertility-treatment-card .month-year-input,
+  .fertility-treatment-card .date-input,
+  .fertility-treatment-card input[type="month"],
+  .fertility-treatment-card input[type="date"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    border: 1px solid #dcdfe5 !important;
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    -webkit-appearance: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE UX FIXES — Invoice & Global
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. Prevent iOS Safari auto-zoom on input focus (requires font-size >= 16px) */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px !important;
+  }
+  /* Ensure number inputs use decimal keyboard */
+  input[type="number"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* 2. Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* 3. Invoice modal — full-screen on mobile */
+@media (max-width: 640px) {
+  /* Target the Radix Dialog overlay content on mobile */
+  [data-radix-dialog-content].invoice-modal-content {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100dvw !important;
+    max-width: 100dvw !important;
+    /* Use svh (small viewport height) — the stable minimum that does NOT change
+       when the iOS keyboard opens/closes. This prevents the "stuck zoom" where
+       the visual viewport remains at keyboard-open scale after blur.
+       100dvh (dynamic) shrinks when keyboard opens → dialog jumps → stuck zoom.
+       100svh (small) = stable minimum → no jump, no stuck zoom.
+       The scrollable invoice-modal-body handles content overflow. */
+    height: 100svh !important;
+    max-height: 100svh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    translate: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+}
+
+/* 4. Lock scroll direction inside invoice modal body */
+.invoice-modal-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 100px;
+}
+
+/* 5. Safe-area bottom padding utility */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* 6. Ensure all children of invoice modal don't overflow */
+.invoice-modal-body * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 7. Payment row stacking on mobile */
+@media (max-width: 640px) {
+  .payment-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .payment-row > * {
+    width: 100% !important;
+  }
+}

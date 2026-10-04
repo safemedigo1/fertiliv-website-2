@@ -1,0 +1,9 @@
+{
+  "crons": [
+    { "path": "/api/scheduled/updateExchangeRates", "schedule": "0 6 * * *" },
+    { "path": "/api/scheduled/retryStorageDeletions", "schedule": "15 * * * *" },
+    { "path": "/api/scheduled/retryGoogleCalendarAppointmentSyncs", "schedule": "*/15 * * * *" },
+    { "path": "/api/scheduled/expirePendingDrafts", "schedule": "30 * * * *" },
+    { "path": "/api/scheduled/appointmentReminders", "schedule": "*/5 * * * *" }
+  ]
+}

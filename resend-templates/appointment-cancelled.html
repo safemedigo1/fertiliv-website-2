@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Appointment Cancelled – Fertiliv</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f4f1ff; font-family: Arial, Helvetica, sans-serif; padding: 32px 16px; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(124,58,237,0.10); }
+    .header { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); padding: 32px; text-align: center; }
+    .header-logo { font-size: 28px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
+    .header-logo span { color: #c4b5fd; }
+    .header-tagline { color: #ddd6fe; font-size: 13px; margin-top: 4px; }
+    .status-badge { display: inline-block; background: #ef4444; color: #fff; font-size: 13px; font-weight: 700; padding: 5px 16px; border-radius: 20px; margin-top: 16px; letter-spacing: 0.5px; }
+    .body { padding: 36px 36px 28px; }
+    .greeting { font-size: 17px; color: #1a1a2e; margin-bottom: 12px; }
+    .greeting strong { color: #7c3aed; }
+    .intro { color: #4b5563; font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
+    .cancelled-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+    .cancelled-box p { font-size: 14px; color: #7f1d1d; line-height: 1.7; }
+    .cancelled-box strong { color: #991b1b; }
+    .reason-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #9a3412; line-height: 1.6; margin-bottom: 24px; }
+    .reason-box strong { color: #c2410c; }
+    .cta-box { background: #f5f3ff; border: 1px solid #e9e3ff; border-radius: 10px; padding: 20px; text-align: center; margin-bottom: 24px; }
+    .cta-box p { font-size: 14px; color: #4b5563; margin-bottom: 14px; }
+    .cta-btn { display: inline-block; background: #7c3aed; color: #ffffff; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 8px; text-decoration: none; }
+    .closing { font-size: 14px; color: #4b5563; line-height: 1.7; }
+    .closing strong { color: #1a1a2e; }
+    .footer { background: #f8f7ff; border-top: 1px solid #e9e3ff; padding: 20px 36px; text-align: center; }
+    .footer p { color: #9ca3af; font-size: 12px; line-height: 1.8; }
+    .footer a { color: #7c3aed; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-logo">🌿 Fertil<span>iv</span></div>
+      <div class="header-tagline">Your Fertility Journey, Our Care</div>
+      <div class="status-badge">✕ Appointment Cancelled</div>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+      <p class="greeting">Dear <strong>{{patientName}}</strong>,</p>
+      <p class="intro">
+        We regret to inform you that your appointment at Fertiliv has been cancelled. We sincerely apologize for any inconvenience this may cause.
+      </p>
+
+      <!-- Cancelled Appointment Info -->
+      <div class="cancelled-box">
+        <p>Your appointment scheduled for <strong>{{appointmentDate}} at {{appointmentTime}}</strong> with <strong>{{doctorName}}</strong> has been cancelled.</p>
+      </div>
+
+      <!-- Reason (if provided) -->
+      <div class="reason-box">
+        <strong>Reason for cancellation:</strong> {{cancellationReason}}
+      </div>
+
+      <!-- Reschedule CTA -->
+      <div class="cta-box">
+        <p>Would you like to reschedule your appointment? Our team is ready to assist you.</p>
+        <a href="mailto:info@fertiliv.com" class="cta-btn">Contact Us to Reschedule</a>
+      </div>
+
+      <p class="closing">
+        We apologize for any inconvenience and hope to see you soon.<br /><br />
+        Warm regards,<br />
+        <strong>The Fertiliv Team</strong>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Fertiliv Fertility Clinic &bull; <a href="mailto:info@fertiliv.com">info@fertiliv.com</a>
+      </p>
+      <p>
+        This email was sent because your appointment at Fertiliv was cancelled.<br />
+        If you believe this is an error, please contact us immediately.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
