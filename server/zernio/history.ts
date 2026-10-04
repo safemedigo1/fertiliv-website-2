@@ -7,6 +7,8 @@ import { digest, rememberZernioContact, reviseZernioMessage, upsertZernioMessage
 
 const syncedAt = new Map<number, number>();
 const SYNC_INTERVAL_MS = 60_000;
+/** Cap one-thread history pull so an inbox open cannot hang the serverless request. */
+const SYNC_TIMEOUT_MS = 12_000;
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
@@ -71,8 +73,28 @@ async function syncOne(conversationId: number) {
       eventKey: `history:${envelope.externalMessageId ?? conversationId}:${messages.indexOf(message)}`,
     });
   }
-  await rememberZernioContact(conversationId, name, phone);
+  // Only write when inbound history actually has a label or phone; never clear stored contact fields.
+  if (name || phone) await rememberZernioContact(conversationId, name, phone);
   console.info("[zernio] history refreshed", { conversationId, messages: messages.length, media, contacts, reactions });
+}
+
+function withSyncTimeout<T>(work: Promise<T>, conversationId: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      console.warn("[zernio] history sync timed out", { conversationId, timeoutMs: SYNC_TIMEOUT_MS });
+      reject(new Error("zernio_sync_timeout"));
+    }, SYNC_TIMEOUT_MS);
+    work.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (error) => {
+        clearTimeout(timer);
+        reject(error);
+      },
+    );
+  });
 }
 
 /** Pulls the live WhatsApp thread so media, contacts, and reactions survive a webhook that stored only text. */
@@ -82,17 +104,23 @@ export async function syncZernioConversation(conversationId: number) {
   if (Date.now() - last < SYNC_INTERVAL_MS) return;
   syncedAt.set(conversationId, Date.now());
   try {
-    await syncOne(conversationId);
+    await withSyncTimeout(syncOne(conversationId), conversationId);
   } catch (error) {
     syncedAt.delete(conversationId);
-    console.error("[zernio] history sync failed", { conversationId, name: error instanceof Error ? error.name : "error" });
+    console.error("[zernio] history sync failed", {
+      conversationId,
+      name: error instanceof Error ? error.name : "error",
+      message: error instanceof Error && error.message === "zernio_sync_timeout" ? "timeout" : "error",
+    });
   }
 }
 
+/** Background-only full inbox pull. Do not await this on the contact list; it is too slow for serverless. */
 export async function syncZernioInbox() {
   const db = await getDb();
   if (!db) return;
   const rows = await db.select({ id: whatsappConversations.id }).from(whatsappConversations)
     .where(eq(whatsappConversations.provider, "zernio")).limit(20);
+  console.info("[zernio] inbox history pull started", { conversations: rows.length });
   for (const row of rows) await syncZernioConversation(row.id);
 }

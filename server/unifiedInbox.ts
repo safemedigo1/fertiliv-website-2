@@ -28,7 +28,7 @@ import { getDb } from "./db";
 import { canUserAccessLinkedDeviceLine } from "./whatsappLinkedDevice";
 import { getOperationalInboxContext } from "./operationalInbox";
 import { canDisplayFullInboxPhone, classifyInboxSenderEndpoint, normalizeInboxPhone } from "../shared/unifiedInbox";
-import { syncZernioConversation, syncZernioInbox } from "./zernio/history";
+import { syncZernioConversation } from "./zernio/history";
 import type {
   UnifiedInboxConversation,
   UnifiedInboxConversationDetail,
@@ -283,7 +283,7 @@ export async function listUnifiedInboxConversations(
   actor?: InboxActor,
 ): Promise<UnifiedInboxProjection> {
   const db = await getDb();
-  await syncZernioInbox();
+  // Serve saved conversations immediately. Full Zernio history pull blocks serverless for minutes.
   const resolution = input.resolution ?? "all";
   const search = normalizeSearch(input.search);
   const limit = Math.min(Math.max(input.limit ?? 100, 1), 100);
@@ -406,6 +406,8 @@ export async function getUnifiedInboxConversationDetail(
 ): Promise<UnifiedInboxConversationDetail | null> {
   const db = await getDb();
   if (!db) return null;
+  // Refresh only this thread, with a hard timeout inside syncZernioConversation.
+  // Failures leave the saved DB rows intact so the UI still shows name, phone, and messages.
   await syncZernioConversation(conversationId);
 
   const [header] = await db.select({
